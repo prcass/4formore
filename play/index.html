@@ -14,7 +14,7 @@
 </head>
 <body>
     <!-- Version Indicator (always visible) -->
-    <div class="version-corner">v1.0.9</div>
+    <div class="version-corner">v1.1.0</div>
 
     <!-- Loading Screen -->
     <div id="loadingScreen" class="screen active">
@@ -32,7 +32,7 @@
             <h1>4forMore</h1>
             <p class="subtitle">Physical Game Scanner</p>
 
-            <div class="version-badge">v1.0.9</div>
+            <div class="version-badge">v1.1.0</div>
 
             <div class="status-indicator" id="offlineIndicator">
                 <span class="icon">⚡</span>
@@ -143,7 +143,12 @@
         <div class="container">
             <h2>Scan Your Token</h2>
 
-            <p class="instruction">Scan a token to compare with the center token</p>
+            <div class="center-display" style="margin-bottom: 20px;">
+                <p class="label">Current Center Token:</p>
+                <div class="token-name" id="scanScreenCenterToken"></div>
+            </div>
+
+            <p class="instruction">Scan a token to compare</p>
 
             <div id="tokenScanner" class="scanner-container"></div>
 

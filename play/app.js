@@ -258,6 +258,12 @@ document.getElementById('continueFromCenterBtn').addEventListener('click', () =>
     // Stop any active scanners first
     stopAllScanners();
 
+    // Show center token on scan screen
+    const centerTokenEl = document.getElementById('scanScreenCenterToken');
+    if (centerTokenEl) {
+        centerTokenEl.textContent = gameState.centerToken.name;
+    }
+
     // Go to scanning next token
     showScreen('scanTokenScreen');
 
@@ -287,9 +293,19 @@ document.getElementById('continueBtn').addEventListener('click', () => {
     // Continue turn - scan next token
     gameState.scannedToken = null;
     gameState.playerGuess = null;
+
+    // Show updated center token
+    const centerTokenEl = document.getElementById('scanScreenCenterToken');
+    if (centerTokenEl) {
+        centerTokenEl.textContent = gameState.centerToken.name;
+    }
+
     showScreen('scanTokenScreen');
-    document.getElementById('scanInstructions').textContent = `Scan a ${gameState.challenge.category} token to compare`;
-    startScanner('tokenScanner', handleDraftScanned);
+
+    // Small delay to ensure screen is visible and scanners are fully stopped
+    setTimeout(() => {
+        startScanner('tokenScanner', handleDraftScanned);
+    }, 500);
 });
 
 document.getElementById('nextPlayerBtn').addEventListener('click', () => {

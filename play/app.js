@@ -82,9 +82,12 @@ function startGame() {
 // Handle challenge card scanned
 function handleChallengeScanned(qrData) {
     console.log('📷 Challenge scanned:', qrData);
+    console.log('🔵 Stopping challenge scanner...');
 
     // Stop scanner immediately to prevent multiple scans
     stopScanner('challengeScanner');
+
+    console.log('🔵 Processing challenge QR data...');
 
     try {
         // Parse QR code (format: ?type=challenge&id=MOV_BOXOFFICE)
@@ -104,10 +107,15 @@ function handleChallengeScanned(qrData) {
 
         // Store challenge
         gameState.challenge = challenge;
+        console.log('✅ Challenge stored:', challenge.name);
 
         // Show challenge selected screen
+        console.log('🔵 Displaying challenge card...');
         displayChallenge(challenge);
+
+        console.log('🔵 Switching to challengeSelectedScreen...');
         showScreen('challengeSelectedScreen');
+        console.log('✅ Now on challengeSelectedScreen');
 
     } catch (error) {
         console.error('❌ Challenge scan error:', error);

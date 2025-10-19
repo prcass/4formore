@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Test - 4forMore</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .log {
+            background: #f9f9f9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .error {
+            border-left-color: #e74c3c;
+            background: #ffebee;
+        }
+        .success {
+            border-left-color: #27ae60;
+            background: #e8f5e9;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 4forMore Flow Test</h1>
+    <p>This page tests the QR scanning flow without needing a camera.</p>
+
+    <div class="test-section">
+        <h2>Step 1: Start Game</h2>
+        <button onclick="testStartGame()">Start Game</button>
+        <div id="log1" class="log"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 2: Scan Challenge Card</h2>
+        <button onclick="testScanChallenge('COU_POPULATION')">Scan Population Challenge</button>
+        <button onclick="testScanChallenge('MOV_BOXOFFICE')">Scan Box Office Challenge</button>
+        <button onclick="testScanChallenge('INVALID')">Scan Invalid Challenge</button>
+        <div id="log2" class="log"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 3: Scan Center Token</h2>
+        <button onclick="testScanToken('COU005', 'center')">Scan USA (Country)</button>
+        <button onclick="testScanToken('MOV004', 'center')">Scan Avatar (Movie)</button>
+        <button onclick="testScanToken('MOV004', 'center')">Scan Wrong Category</button>
+        <div id="log3" class="log"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 4: Scan Draft Token</h2>
+        <button onclick="testScanToken('COU001', 'draft')">Scan Germany</button>
+        <button onclick="testScanToken('MOV034', 'draft')">Scan Titanic</button>
+        <div id="log4" class="log"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Current Game State</h2>
+        <button onclick="showGameState()">Show State</button>
+        <pre id="stateDisplay" style="background: #f9f9f9; padding: 10px; border-radius: 4px;"></pre>
+    </div>
+
+    <script>
+        // Mock the scanner functions
+        window.startScanner = function(containerId, callback) {
+            console.log(`📷 Mock scanner started: ${containerId}`);
+            window.currentCallback = callback;
+            window.currentScanner = containerId;
+        };
+
+        window.stopScanner = function(containerId) {
+            console.log(`🛑 Mock scanner stopped: ${containerId}`);
+            window.currentCallback = null;
+            window.currentScanner = null;
+        };
+
+        window.stopAllScanners = function() {
+            console.log(`🛑 All scanners stopped`);
+            window.currentCallback = null;
+            window.currentScanner = null;
+        };
+
+        function log(message, logId, type = 'info') {
+            const logEl = document.getElementById(logId);
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'log error' : (type === 'success' ? 'log success' : 'log');
+            logEl.className = className;
+            logEl.innerHTML = `[${timestamp}] ${message}`;
+        }
+
+        function testStartGame() {
+            log('Calling startGame()...', 'log1');
+            try {
+                startGame();
+                log('✅ Game started successfully', 'log1', 'success');
+            } catch (e) {
+                log(`❌ Error: ${e.message}`, 'log1', 'error');
+            }
+        }
+
+        function testScanChallenge(id) {
+            const qrData = `https://prcass.github.io/4formore/play?type=challenge&id=${id}`;
+            log(`Simulating challenge scan: ${id}`, 'log2');
+
+            if (window.currentCallback) {
+                try {
+                    window.currentCallback(qrData);
+                    log(`✅ Challenge scanned: ${id}`, 'log2', 'success');
+                } catch (e) {
+                    log(`❌ Error: ${e.message}`, 'log2', 'error');
+                }
+            } else {
+                log('❌ No scanner active! Click "Start Game" first', 'log2', 'error');
+            }
+        }
+
+        function testScanToken(id, type) {
+            const qrData = `https://prcass.github.io/4formore/play?type=token&id=${id}`;
+            const logId = type === 'center' ? 'log3' : 'log4';
+            log(`Simulating token scan: ${id}`, logId);
+
+            if (window.currentCallback) {
+                try {
+                    window.currentCallback(qrData);
+                    log(`✅ Token scanned: ${id}`, logId, 'success');
+                } catch (e) {
+                    log(`❌ Error: ${e.message}`, logId, 'error');
+                }
+            } else {
+                log('❌ No scanner active!', logId, 'error');
+            }
+        }
+
+        function showGameState() {
+            const state = {
+                challenge: gameState.challenge ? gameState.challenge.name : 'None',
+                centerToken: gameState.centerToken ? gameState.centerToken.name : 'None',
+                scannedToken: gameState.scannedToken ? gameState.scannedToken.name : 'None',
+                playerGuess: gameState.playerGuess || 'None',
+                activeScanner: window.currentScanner || 'None'
+            };
+            document.getElementById('stateDisplay').textContent = JSON.stringify(state, null, 2);
+        }
+    </script>
+
+    <!-- Load the actual game scripts -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="storage.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initApp();
+            console.log('Test page ready!');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4forMore - QR Code Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+        .instructions h2 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        .instructions ol {
+            line-height: 1.8;
+        }
+        .instructions code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .qr-card {
+            text-align: center;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        .qr-card img {
+            width: 150px;
+            height: 150px;
+            border: 1px solid #ccc;
+        }
+        .qr-card .name {
+            font-weight: bold;
+            margin: 10px 0 5px 0;
+            font-size: 14px;
+        }
+        .qr-card .code {
+            color: #666;
+            font-size: 12px;
+            font-family: monospace;
+        }
+        .category-countries { border-color: #3498DB; }
+        .category-movies { border-color: #E74C3C; }
+        .category-companies { border-color: #2ECC71; }
+        .category-sports { border-color: #F39C12; }
+        .category-challenge { border-color: #9B59B6; }
+
+        .app-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .app-link:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 4forMore - QR Code Test Page</h1>
+
+    <div class="instructions">
+        <h2>📱 How to Test the App</h2>
+        <ol>
+            <li>Open the app on your phone: <a href="https://prcass.github.io/4formore/play/" target="_blank" class="app-link">Open 4forMore App</a></li>
+            <li>Tap "START GAME" in the app</li>
+            <li>Scan a <strong>challenge card QR code</strong> from the "Challenge Cards" section below</li>
+            <li>Scan a <strong>center token QR code</strong> from the matching category</li>
+            <li>Choose "HIGHER" or "LOWER"</li>
+            <li>Scan another <strong>token QR code</strong> from the same category</li>
+            <li>See the result (green = correct, red = incorrect)!</li>
+        </ol>
+        <p><strong>Tip:</strong> Display this page on your computer screen and scan the QR codes with your phone.</p>
+    </div>
+
+    <div class="section">
+        <h2>🎯 Challenge Cards (Scan First)</h2>
+        <div class="qr-grid">
+            <div class="qr-card category-challenge">
+                <img src="qr-codes/challenges/COU_POPULATION.png" alt="Population">
+                <div class="name">Population</div>
+                <div class="code">Countries Challenge</div>
+            </div>
+            <div class="qr-card category-challenge">
+                <img src="qr-codes/challenges/COU_GDP.png" alt="GDP">
+                <div class="name">GDP Total</div>
+                <div class="code">Countries Challenge</div>
+            </div>
+            <div class="qr-card category-challenge">
+                <img src="qr-codes/challenges/MOV_BOXOFFICE.png" alt="Box Office">
+                <div class="name">Box Office Gross</div>
+                <div class="code">Movies Challenge</div>
+            </div>
+            <div class="qr-card category-challenge">
+                <img src="qr-codes/challenges/MOV_BUDGET.png" alt="Budget">
+                <div class="name">Production Budget</div>
+                <div class="code">Movies Challenge</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌍 Countries Tokens</h2>
+        <div class="qr-grid">
+            <div class="qr-card category-countries">
+                <img src="qr-codes/tokens/COU001_GER.png" alt="Germany">
+                <div class="name">Germany</div>
+                <div class="code">GER</div>
+            </div>
+            <div class="qr-card category-countries">
+                <img src="qr-codes/tokens/COU005_UST.png" alt="United States">
+                <div class="name">United States</div>
+                <div class="code">UST</div>
+            </div>
+            <div class="qr-card category-countries">
+                <img src="qr-codes/tokens/COU006_CHI.png" alt="China">
+                <div class="name">China</div>
+                <div class="code">CHI</div>
+            </div>
+            <div class="qr-card category-countries">
+                <img src="qr-codes/tokens/COU025_BRA.png" alt="Brazil">
+                <div class="name">Brazil</div>
+                <div class="code">BRA</div>
+            </div>
+            <div class="qr-card category-countries">
+                <img src="qr-codes/tokens/COU035_IND.png" alt="India">
+                <div class="name">India</div>
+                <div class="code">IND</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🎬 Movies Tokens</h2>
+        <div class="qr-grid">
+            <div class="qr-card category-movies">
+                <img src="qr-codes/tokens/MOV004_AVA.png" alt="Avatar">
+                <div class="name">Avatar</div>
+                <div class="code">AVA</div>
+            </div>
+            <div class="qr-card category-movies">
+                <img src="qr-codes/tokens/MOV034_TIT.png" alt="Titanic">
+                <div class="name">Titanic</div>
+                <div class="code">TIT</div>
+            </div>
+            <div class="qr-card category-movies">
+                <img src="qr-codes/tokens/MOV002_AIW.png" alt="Avengers Infinity War">
+                <div class="name">Avengers: Infinity War</div>
+                <div class="code">AIW</div>
+            </div>
+            <div class="qr-card category-movies">
+                <img src="qr-codes/tokens/MOV026_JWO.png" alt="Jurassic World">
+                <div class="name">Jurassic World</div>
+                <div class="code">JWO</div>
+            </div>
+            <div class="qr-card category-movies">
+                <img src="qr-codes/tokens/MOV016_FRO.png" alt="Frozen">
+                <div class="name">Frozen</div>
+                <div class="code">FRO</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="instructions" style="margin-top: 30px;">
+        <h2>💡 Testing Tips</h2>
+        <ul>
+            <li><strong>Good lighting:</strong> Make sure your screen is bright and the room is well-lit</li>
+            <li><strong>Distance:</strong> Hold your phone 6-12 inches from the screen</li>
+            <li><strong>Category matching:</strong> If you scan a Countries challenge, only scan Countries tokens</li>
+            <li><strong>Known answers:</strong> USA has higher population than Germany, Avatar has higher box office than Frozen</li>
+            <li><strong>Offline test:</strong> After first load, try turning off WiFi/data - app should still work!</li>
+        </ul>
+    </div>
+</body>
+</html>

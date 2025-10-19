@@ -1,0 +1,126 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-10-19T00:00:00Z",
+  "challenges": {
+    "COU_POPULATION": {
+      "id": "COU_POPULATION",
+      "name": "Population",
+      "category": "countries",
+      "categoryColor": "#3498DB",
+      "statKey": "population_total",
+      "displayFormat": "number",
+      "description": "Compare total population",
+      "unit": "people"
+    },
+    "COU_GDP": {
+      "id": "COU_GDP",
+      "name": "GDP Total",
+      "category": "countries",
+      "categoryColor": "#3498DB",
+      "statKey": "gdp_total",
+      "displayFormat": "currency",
+      "description": "Compare gross domestic product",
+      "unit": "USD"
+    },
+    "COU_LIFE_EXPECT": {
+      "id": "COU_LIFE_EXPECT",
+      "name": "Life Expectancy",
+      "category": "countries",
+      "categoryColor": "#3498DB",
+      "statKey": "life_expectancy",
+      "displayFormat": "decimal",
+      "description": "Compare average life expectancy",
+      "unit": "years"
+    },
+    "COU_AIRPORTS": {
+      "id": "COU_AIRPORTS",
+      "name": "Airports",
+      "category": "countries",
+      "categoryColor": "#3498DB",
+      "statKey": "airports",
+      "displayFormat": "number",
+      "description": "Compare number of airports",
+      "unit": "airports"
+    },
+    "COU_UNESCO": {
+      "id": "COU_UNESCO",
+      "name": "UNESCO Sites",
+      "category": "countries",
+      "categoryColor": "#3498DB",
+      "statKey": "unesco_total_sites",
+      "displayFormat": "number",
+      "description": "Compare UNESCO World Heritage sites",
+      "unit": "sites"
+    },
+    "COU_NOBEL": {
+      "id": "COU_NOBEL",
+      "name": "Nobel Laureates",
+      "category": "countries",
+      "categoryColor": "#3498DB",
+      "statKey": "nobel_laureates",
+      "displayFormat": "number",
+      "description": "Compare number of Nobel Prize winners",
+      "unit": "laureates"
+    },
+    "MOV_BOXOFFICE": {
+      "id": "MOV_BOXOFFICE",
+      "name": "Box Office Gross",
+      "category": "movies",
+      "categoryColor": "#E74C3C",
+      "statKey": "box_office_gross",
+      "displayFormat": "currency",
+      "description": "Compare worldwide box office earnings",
+      "unit": "USD"
+    },
+    "MOV_BUDGET": {
+      "id": "MOV_BUDGET",
+      "name": "Production Budget",
+      "category": "movies",
+      "categoryColor": "#E74C3C",
+      "statKey": "production_budget",
+      "displayFormat": "currency",
+      "description": "Compare production budget",
+      "unit": "USD"
+    },
+    "MOV_RUNTIME": {
+      "id": "MOV_RUNTIME",
+      "name": "Runtime",
+      "category": "movies",
+      "categoryColor": "#E74C3C",
+      "statKey": "runtime_minutes",
+      "displayFormat": "number",
+      "description": "Compare movie runtime",
+      "unit": "minutes"
+    },
+    "MOV_IMDB": {
+      "id": "MOV_IMDB",
+      "name": "IMDB Rating",
+      "category": "movies",
+      "categoryColor": "#E74C3C",
+      "statKey": "imdb_rating",
+      "displayFormat": "decimal",
+      "description": "Compare IMDB user rating",
+      "unit": "rating"
+    },
+    "MOV_OSCARS": {
+      "id": "MOV_OSCARS",
+      "name": "Oscar Wins",
+      "category": "movies",
+      "categoryColor": "#E74C3C",
+      "statKey": "oscar_wins",
+      "displayFormat": "number",
+      "description": "Compare number of Academy Awards won",
+      "unit": "Oscars"
+    },
+    "MOV_YEAR": {
+      "id": "MOV_YEAR",
+      "name": "Release Year",
+      "category": "movies",
+      "categoryColor": "#E74C3C",
+      "statKey": "release_year",
+      "displayFormat": "year",
+      "description": "Compare release year",
+      "unit": "year"
+    }
+  }
+}

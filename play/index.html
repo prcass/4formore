@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#764ba2">
+
+    <title>4forMore - Physical Game Scanner</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="screen active">
+        <div class="container">
+            <h1>4forMore</h1>
+            <p class="subtitle">Physical Game Scanner</p>
+            <div class="loading-spinner"></div>
+            <p id="loadingStatus">Loading game data...</p>
+        </div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="screen">
+        <div class="container">
+            <h1>4forMore</h1>
+            <p class="subtitle">Physical Game Scanner</p>
+
+            <div class="status-indicator" id="offlineIndicator">
+                <span class="icon">⚡</span>
+                <span id="statusText">Ready (Offline)</span>
+            </div>
+
+            <button class="btn-primary" id="startBtn">Start Game</button>
+
+            <div class="info-box">
+                <p>📱 Grant camera permission when prompted</p>
+                <p>🎮 Scan challenge cards and tokens to play</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Challenge Selection Screen -->
+    <div id="challengeScreen" class="screen">
+        <div class="container">
+            <h2>Select Challenge</h2>
+            <p class="instruction">Scan a challenge card to begin</p>
+
+            <div id="challengeScanner" class="scanner-container"></div>
+
+            <button class="btn-secondary" id="cancelChallengeBtn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Challenge Selected Screen -->
+    <div id="challengeSelectedScreen" class="screen">
+        <div class="container">
+            <h2>Challenge Selected</h2>
+
+            <div class="challenge-card" id="selectedChallengeCard">
+                <div class="challenge-category"></div>
+                <div class="challenge-name"></div>
+                <div class="challenge-description"></div>
+            </div>
+
+            <button class="btn-primary" id="continueFromChallengeBtn">Continue</button>
+        </div>
+    </div>
+
+    <!-- Scan Center Token Screen -->
+    <div id="centerTokenScreen" class="screen">
+        <div class="container">
+            <h2>Scan Center Token</h2>
+            <p class="instruction">Scan the token in the center</p>
+
+            <div class="challenge-info" id="challengeInfo"></div>
+
+            <div id="centerScanner" class="scanner-container"></div>
+
+            <button class="btn-secondary" id="cancelCenterBtn">Back</button>
+        </div>
+    </div>
+
+    <!-- Center Token Set Screen -->
+    <div id="centerSetScreen" class="screen">
+        <div class="container">
+            <h2>Center Token Set</h2>
+
+            <div class="token-display">
+                <div class="token-circle" id="centerTokenCircle"></div>
+                <div class="token-name" id="centerTokenName"></div>
+                <div class="token-code" id="centerTokenCode"></div>
+            </div>
+
+            <p class="ready-message">Ready to compare!</p>
+
+            <button class="btn-primary" id="continueFromCenterBtn">Continue</button>
+        </div>
+    </div>
+
+    <!-- Make Guess Screen -->
+    <div id="guessScreen" class="screen">
+        <div class="container">
+            <h2>Make Your Guess</h2>
+
+            <div class="center-display">
+                <p class="label">Center Token:</p>
+                <div class="token-name" id="guessTokenName"></div>
+                <div class="challenge-stat" id="guessChallengeInfo"></div>
+            </div>
+
+            <p class="instruction">Will your token be higher or lower?</p>
+
+            <div class="guess-buttons">
+                <button class="btn-guess btn-lower" id="guessLowerBtn">
+                    📉 LOWER
+                </button>
+                <button class="btn-guess btn-higher" id="guessHigherBtn">
+                    📈 HIGHER
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scan Your Token Screen -->
+    <div id="scanTokenScreen" class="screen">
+        <div class="container">
+            <h2>Scan Your Token</h2>
+
+            <div class="guess-display">
+                <p>Your Guess: <strong id="playerGuessDisplay"></strong></p>
+                <p>Center: <strong id="centerNameDisplay"></strong></p>
+            </div>
+
+            <div id="tokenScanner" class="scanner-container"></div>
+
+            <button class="btn-secondary" id="cancelScanBtn">Back</button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="resultScreen" class="screen">
+        <div class="container">
+            <div class="result-header" id="resultHeader">
+                <h1 id="resultTitle"></h1>
+            </div>
+
+            <div class="comparison">
+                <div class="comparison-token">
+                    <div class="token-circle" id="scannedTokenCircle"></div>
+                    <div class="token-name" id="scannedTokenName"></div>
+                    <div class="stat-value" id="scannedValue"></div>
+                </div>
+
+                <div class="comparison-operator" id="comparisonOperator"></div>
+
+                <div class="comparison-token">
+                    <div class="token-circle" id="resultCenterCircle"></div>
+                    <div class="token-name" id="resultCenterName"></div>
+                    <div class="stat-value" id="centerValue"></div>
+                </div>
+            </div>
+
+            <div class="guess-feedback" id="guessFeedback"></div>
+
+            <button class="btn-primary" id="continueBtn">Continue Turn</button>
+            <button class="btn-secondary" id="nextPlayerBtn">Next Player</button>
+        </div>
+    </div>
+
+    <!-- Error Screen -->
+    <div id="errorScreen" class="screen">
+        <div class="container">
+            <h2>⚠️ <span id="errorTitle">Error</span></h2>
+            <p id="errorMessage"></p>
+            <button class="btn-primary" id="errorRetryBtn">Try Again</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../data/tokens.json" type="application/json" id="tokensData"></script>
+    <script src="../data/challenges.json" type="application/json" id="challengesData"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="storage.js"></script>
+    <script src="scanner.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

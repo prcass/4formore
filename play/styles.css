@@ -140,6 +140,36 @@ h2 {
     to { transform: rotate(360deg); }
 }
 
+/* Version Indicators */
+.version-corner {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    color: rgba(255,255,255,0.8);
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 15px;
+    z-index: 9999;
+    letter-spacing: 0.5px;
+    font-family: monospace;
+}
+
+.version-badge {
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    margin: 10px 0;
+    letter-spacing: 0.5px;
+}
+
 /* Status Indicator */
 .status-indicator {
     background: rgba(255,255,255,0.2);

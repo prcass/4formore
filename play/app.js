@@ -284,10 +284,18 @@ document.getElementById('errorRetryBtn').addEventListener('click', () => {
 });
 
 document.getElementById('restartTurnBtn').addEventListener('click', () => {
-    // Restart the turn - go back to center token screen
+    // Restart the turn - go back to scan center token
     gameState.scannedToken = null;
     gameState.playerGuess = null;
-    showScreen('centerSetScreen');
+    gameState.centerToken = null;
+    showScreen('centerTokenScreen');
+    document.getElementById('challengeInfo').textContent = `Challenge: ${gameState.challenge.name}`;
+    startScanner('centerScanner', handleCenterScanned);
+});
+
+document.getElementById('newChallengeBtn').addEventListener('click', () => {
+    // Start completely over with new challenge
+    startGame();
 });
 
 // Initialize app on load

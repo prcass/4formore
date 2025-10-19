@@ -183,8 +183,9 @@ function handleDraftScanned(qrData) {
         // Stop scanner
         stopScanner('tokenScanner');
 
-        // Calculate result
-        showResult();
+        // Show guess screen with both tokens
+        displayGuessScreen();
+        showScreen('guessScreen');
 
     } catch (error) {
         console.error('❌ Draft scan error:', error);
@@ -206,8 +207,8 @@ function showResult() {
         isCorrect = true;
     }
 
-    // Display result
-    displayResult(isCorrect, centerValue, scannedValue);
+    // Display result (no stats shown)
+    displayResult(isCorrect);
 
     // Add to history
     gameState.history.push({
@@ -218,11 +219,9 @@ function showResult() {
         correct: isCorrect
     });
 
-    // If correct, update center token
+    // If correct, update center token for next round
     if (isCorrect) {
         gameState.centerToken = gameState.scannedToken;
-        gameState.scannedToken = null;
-        gameState.playerGuess = null;
     }
 }
 
@@ -246,24 +245,20 @@ document.getElementById('cancelCenterBtn').addEventListener('click', () => {
 });
 
 document.getElementById('continueFromCenterBtn').addEventListener('click', () => {
-    showScreen('guessScreen');
-    displayGuessScreen();
+    // Go directly to scanning next token
+    showScreen('scanTokenScreen');
+    document.getElementById('scanInstructions').textContent = `Scan a ${gameState.challenge.category} token to compare`;
+    startScanner('tokenScanner', handleDraftScanned);
 });
 
 document.getElementById('guessLowerBtn').addEventListener('click', () => {
     gameState.playerGuess = 'lower';
-    showScreen('scanTokenScreen');
-    document.getElementById('playerGuessDisplay').textContent = '📉 LOWER';
-    document.getElementById('centerNameDisplay').textContent = gameState.centerToken.name;
-    startScanner('tokenScanner', handleDraftScanned);
+    showResult();
 });
 
 document.getElementById('guessHigherBtn').addEventListener('click', () => {
     gameState.playerGuess = 'higher';
-    showScreen('scanTokenScreen');
-    document.getElementById('playerGuessDisplay').textContent = '📈 HIGHER';
-    document.getElementById('centerNameDisplay').textContent = gameState.centerToken.name;
-    startScanner('tokenScanner', handleDraftScanned);
+    showResult();
 });
 
 document.getElementById('cancelScanBtn').addEventListener('click', () => {
@@ -272,9 +267,12 @@ document.getElementById('cancelScanBtn').addEventListener('click', () => {
 });
 
 document.getElementById('continueBtn').addEventListener('click', () => {
-    // Continue turn (back to guess screen)
-    showScreen('guessScreen');
-    displayGuessScreen();
+    // Continue turn - scan next token
+    gameState.scannedToken = null;
+    gameState.playerGuess = null;
+    showScreen('scanTokenScreen');
+    document.getElementById('scanInstructions').textContent = `Scan a ${gameState.challenge.category} token to compare`;
+    startScanner('tokenScanner', handleDraftScanned);
 });
 
 document.getElementById('nextPlayerBtn').addEventListener('click', () => {
@@ -284,6 +282,13 @@ document.getElementById('nextPlayerBtn').addEventListener('click', () => {
 
 document.getElementById('errorRetryBtn').addEventListener('click', () => {
     showScreen('welcomeScreen');
+});
+
+document.getElementById('restartTurnBtn').addEventListener('click', () => {
+    // Restart the turn - go back to center token screen
+    gameState.scannedToken = null;
+    gameState.playerGuess = null;
+    showScreen('centerSetScreen');
 });
 
 // Initialize app on load

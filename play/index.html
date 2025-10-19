@@ -106,13 +106,21 @@
         <div class="container">
             <h2>Make Your Guess</h2>
 
+            <div class="challenge-stat" id="guessChallengeInfo" style="text-align: center; font-size: 1.2em; margin-bottom: 20px; font-weight: bold;"></div>
+
+            <div class="center-display">
+                <p class="label">Your Token:</p>
+                <div class="token-name" id="scannedTokenName"></div>
+            </div>
+
+            <p class="instruction" style="font-size: 1.5em; margin: 20px 0;">vs</p>
+
             <div class="center-display">
                 <p class="label">Center Token:</p>
                 <div class="token-name" id="guessTokenName"></div>
-                <div class="challenge-stat" id="guessChallengeInfo"></div>
             </div>
 
-            <p class="instruction">Will your token be higher or lower?</p>
+            <p class="instruction">Is your token's <span id="guessChallengeInfo2"></span> higher or lower?</p>
 
             <div class="guess-buttons">
                 <button class="btn-guess btn-lower" id="guessLowerBtn">
@@ -144,30 +152,18 @@
     <!-- Result Screen -->
     <div id="resultScreen" class="screen">
         <div class="container">
-            <div class="result-header" id="resultHeader">
-                <h1 id="resultTitle"></h1>
-            </div>
-
-            <div class="comparison">
-                <div class="comparison-token">
-                    <div class="token-circle" id="scannedTokenCircle"></div>
-                    <div class="token-name" id="scannedTokenName"></div>
-                    <div class="stat-value" id="scannedValue"></div>
-                </div>
-
-                <div class="comparison-operator" id="comparisonOperator"></div>
-
-                <div class="comparison-token">
-                    <div class="token-circle" id="resultCenterCircle"></div>
-                    <div class="token-name" id="resultCenterName"></div>
-                    <div class="stat-value" id="centerValue"></div>
+            <div class="result-reveal" id="resultReveal">
+                <div class="countdown" id="countdown"></div>
+                <div class="result-header" id="resultHeader" style="display: none;">
+                    <h1 id="resultTitle"></h1>
                 </div>
             </div>
 
-            <div class="guess-feedback" id="guessFeedback"></div>
-
-            <button class="btn-primary" id="continueBtn">Continue Turn</button>
-            <button class="btn-secondary" id="nextPlayerBtn">Next Player</button>
+            <div class="result-buttons" id="resultButtons" style="display: none; margin-top: 40px;">
+                <button class="btn-primary" id="continueBtn">Continue Turn</button>
+                <button class="btn-secondary" id="nextPlayerBtn">Next Player</button>
+                <button class="btn-secondary" id="restartTurnBtn">Restart Turn</button>
+            </div>
         </div>
     </div>
 

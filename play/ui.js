@@ -38,64 +38,80 @@ function displayCenterToken(token) {
 
 // Display guess screen
 function displayGuessScreen() {
+    // Show center token
     document.getElementById('guessTokenName').textContent = gameState.centerToken.name;
-    document.getElementById('guessChallengeInfo').textContent =
-        `${gameState.challenge.name}: ???`;
+
+    // Show scanned token
+    if (gameState.scannedToken) {
+        document.getElementById('scannedTokenName').textContent = gameState.scannedToken.name;
+    }
+
+    // Show challenge
+    document.getElementById('guessChallengeInfo').textContent = gameState.challenge.name;
 }
 
-// Display result
-function displayResult(isCorrect, centerValue, scannedValue) {
+// Display result with dramatic countdown
+function displayResult(isCorrect) {
     showScreen('resultScreen');
 
-    // Header
+    // Hide result header and buttons initially
+    document.getElementById('resultHeader').style.display = 'none';
+    document.getElementById('resultButtons').style.display = 'none';
+
+    // Show countdown
+    const countdown = document.getElementById('countdown');
+    countdown.style.display = 'block';
+    countdown.style.fontSize = '10em';
+    countdown.style.fontWeight = 'bold';
+    countdown.style.textAlign = 'center';
+    countdown.style.marginTop = '100px';
+
+    let count = 3;
+    countdown.textContent = count;
+
+    const countdownInterval = setInterval(() => {
+        count--;
+        if (count > 0) {
+            countdown.textContent = count;
+        } else {
+            clearInterval(countdownInterval);
+            countdown.style.display = 'none';
+            revealResult(isCorrect);
+        }
+    }, 1000);
+}
+
+// Reveal the result with animation
+function revealResult(isCorrect) {
     const header = document.getElementById('resultHeader');
     const title = document.getElementById('resultTitle');
 
+    // Set result text and style
     if (isCorrect) {
         header.className = 'result-header correct';
         title.textContent = '✅ CORRECT!';
-    } else {
-        header.className = 'result-header wrong';
-        title.textContent = '❌ WRONG!';
-    }
-
-    // Scanned token
-    const scannedCircle = document.getElementById('scannedTokenCircle');
-    scannedCircle.style.borderColor = gameState.scannedToken.categoryColor;
-    scannedCircle.className = `token-circle cat-${gameState.scannedToken.category}`;
-
-    document.getElementById('scannedTokenName').textContent = gameState.scannedToken.name;
-    document.getElementById('scannedValue').textContent = formatValue(scannedValue, gameState.challenge.displayFormat);
-
-    // Center token
-    const centerCircle = document.getElementById('resultCenterCircle');
-    centerCircle.style.borderColor = gameState.centerToken.categoryColor;
-    centerCircle.className = `token-circle cat-${gameState.centerToken.category}`;
-
-    document.getElementById('resultCenterName').textContent = gameState.centerToken.name;
-    document.getElementById('centerValue').textContent = formatValue(centerValue, gameState.challenge.displayFormat);
-
-    // Comparison operator
-    const operator = document.getElementById('comparisonOperator');
-    if (scannedValue > centerValue) {
-        operator.textContent = 'is HIGHER than';
-    } else if (scannedValue < centerValue) {
-        operator.textContent = 'is LOWER than';
-    } else {
-        operator.textContent = 'equals';
-    }
-
-    // Feedback
-    const feedback = document.getElementById('guessFeedback');
-    if (isCorrect) {
-        feedback.textContent = `You guessed ${gameState.playerGuess.toUpperCase()} and you were right!`;
         document.getElementById('continueBtn').style.display = 'block';
         document.getElementById('nextPlayerBtn').style.display = 'none';
     } else {
-        feedback.textContent = `You guessed ${gameState.playerGuess.toUpperCase()} but it was ${scannedValue > centerValue ? 'HIGHER' : 'LOWER'}.`;
+        header.className = 'result-header wrong';
+        title.textContent = '❌ WRONG!';
         document.getElementById('continueBtn').style.display = 'none';
         document.getElementById('nextPlayerBtn').style.display = 'block';
     }
+
+    // Animate reveal
+    header.style.display = 'block';
+    header.style.fontSize = '3em';
+    header.style.textAlign = 'center';
+    header.style.animation = 'scaleIn 0.5s ease-out';
+
+    // Flash background
+    document.body.style.animation = isCorrect ? 'flashGreen 0.5s' : 'flashRed 0.5s';
+
+    // Show buttons after animation
+    setTimeout(() => {
+        document.getElementById('resultButtons').style.display = 'block';
+    }, 500);
 }
 
 // Format value based on display format

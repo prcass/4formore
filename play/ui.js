@@ -20,20 +20,36 @@ function showScreen(screenId) {
 // Display challenge card
 function displayChallenge(challenge) {
     const card = document.getElementById('selectedChallengeCard');
-    card.querySelector('.challenge-category').textContent = `🎯 ${challenge.category.toUpperCase()}`;
-    card.querySelector('.challenge-category').className = `challenge-category cat-${challenge.category}`;
-    card.querySelector('.challenge-name').textContent = challenge.name;
-    card.querySelector('.challenge-description').textContent = challenge.description;
+    if (!card) {
+        console.error('❌ selectedChallengeCard element not found!');
+        return;
+    }
+
+    const categoryEl = card.querySelector('.challenge-category');
+    const nameEl = card.querySelector('.challenge-name');
+    const descEl = card.querySelector('.challenge-description');
+
+    if (categoryEl) {
+        categoryEl.textContent = `🎯 ${challenge.category.toUpperCase()}`;
+        categoryEl.className = `challenge-category cat-${challenge.category}`;
+    }
+    if (nameEl) nameEl.textContent = challenge.name;
+    if (descEl) descEl.textContent = challenge.description;
 }
 
 // Display center token
 function displayCenterToken(token) {
     const circle = document.getElementById('centerTokenCircle');
-    circle.style.borderColor = token.categoryColor;
-    circle.className = `token-circle cat-${token.category}`;
+    if (circle) {
+        circle.style.borderColor = token.categoryColor;
+        circle.className = `token-circle cat-${token.category}`;
+    }
 
-    document.getElementById('centerTokenName').textContent = token.name;
-    document.getElementById('centerTokenCode').textContent = `[${token.code}]`;
+    const nameEl = document.getElementById('centerTokenName');
+    const codeEl = document.getElementById('centerTokenCode');
+
+    if (nameEl) nameEl.textContent = token.name;
+    if (codeEl) codeEl.textContent = `[${token.code}]`;
 }
 
 // Display guess screen

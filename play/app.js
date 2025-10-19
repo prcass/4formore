@@ -83,6 +83,9 @@ function startGame() {
 function handleChallengeScanned(qrData) {
     console.log('📷 Challenge scanned:', qrData);
 
+    // Stop scanner immediately to prevent multiple scans
+    stopScanner('challengeScanner');
+
     try {
         // Parse QR code (format: ?type=challenge&id=MOV_BOXOFFICE)
         const params = new URLSearchParams(qrData.split('?')[1]);
@@ -102,9 +105,6 @@ function handleChallengeScanned(qrData) {
         // Store challenge
         gameState.challenge = challenge;
 
-        // Stop scanner
-        stopScanner('challengeScanner');
-
         // Show challenge selected screen
         displayChallenge(challenge);
         showScreen('challengeSelectedScreen');
@@ -118,6 +118,9 @@ function handleChallengeScanned(qrData) {
 // Handle center token scanned
 function handleCenterScanned(qrData) {
     console.log('📷 Center token scanned:', qrData);
+
+    // Stop scanner immediately to prevent multiple scans
+    stopScanner('centerScanner');
 
     try {
         const params = new URLSearchParams(qrData.split('?')[1]);
@@ -141,9 +144,6 @@ function handleCenterScanned(qrData) {
         // Store center token
         gameState.centerToken = token;
 
-        // Stop scanner
-        stopScanner('centerScanner');
-
         // Show center token set screen
         displayCenterToken(token);
         showScreen('centerSetScreen');
@@ -157,6 +157,9 @@ function handleCenterScanned(qrData) {
 // Handle draft token scanned
 function handleDraftScanned(qrData) {
     console.log('📷 Draft token scanned:', qrData);
+
+    // Stop scanner immediately to prevent multiple scans
+    stopScanner('tokenScanner');
 
     try {
         const params = new URLSearchParams(qrData.split('?')[1]);
@@ -179,9 +182,6 @@ function handleDraftScanned(qrData) {
 
         // Store scanned token
         gameState.scannedToken = token;
-
-        // Stop scanner
-        stopScanner('tokenScanner');
 
         // Show guess screen with both tokens
         displayGuessScreen();

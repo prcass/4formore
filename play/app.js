@@ -246,14 +246,18 @@ document.getElementById('cancelCenterBtn').addEventListener('click', () => {
 
 document.getElementById('continueFromCenterBtn').addEventListener('click', () => {
     console.log('🔵 Continue from center clicked - going to scan token screen');
+
+    // Stop any active scanners first
+    stopAllScanners();
+
     // Go to scanning next token
     showScreen('scanTokenScreen');
 
-    // Small delay to ensure screen is visible before starting scanner
+    // Small delay to ensure screen is visible and scanners are fully stopped
     setTimeout(() => {
         console.log('🔵 Starting token scanner...');
         startScanner('tokenScanner', handleDraftScanned);
-    }, 300);
+    }, 500);
 });
 
 document.getElementById('guessLowerBtn').addEventListener('click', () => {

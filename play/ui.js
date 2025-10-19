@@ -4,11 +4,6 @@
 
 // Show a specific screen
 function showScreen(screenId) {
-    // Stop all scanners before switching screens
-    if (typeof stopAllScanners === 'function') {
-        stopAllScanners();
-    }
-
     // Hide all screens
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');

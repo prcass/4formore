@@ -245,9 +245,8 @@ document.getElementById('cancelCenterBtn').addEventListener('click', () => {
 });
 
 document.getElementById('continueFromCenterBtn').addEventListener('click', () => {
-    // Go directly to scanning next token
+    // Go to scanning next token
     showScreen('scanTokenScreen');
-    document.getElementById('scanInstructions').textContent = `Scan a ${gameState.challenge.category} token to compare`;
     startScanner('tokenScanner', handleDraftScanned);
 });
 
@@ -263,7 +262,7 @@ document.getElementById('guessHigherBtn').addEventListener('click', () => {
 
 document.getElementById('cancelScanBtn').addEventListener('click', () => {
     stopScanner('tokenScanner');
-    showScreen('guessScreen');
+    showScreen('centerSetScreen');
 });
 
 document.getElementById('continueBtn').addEventListener('click', () => {

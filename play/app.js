@@ -228,8 +228,13 @@ function showResult() {
     });
 
     // If correct, update center token for next round
+    console.log('🔵 Updating center token after result...');
+    console.log(`   Was: ${gameState.centerToken.name}`);
     if (isCorrect) {
         gameState.centerToken = gameState.scannedToken;
+        console.log(`   Now: ${gameState.centerToken.name} ✅`);
+    } else {
+        console.log(`   Stays: ${gameState.centerToken.name} (incorrect guess)`);
     }
 }
 
@@ -290,6 +295,9 @@ document.getElementById('cancelScanBtn').addEventListener('click', () => {
 });
 
 document.getElementById('continueBtn').addEventListener('click', () => {
+    console.log('🔵 Continue button clicked');
+    console.log(`   Current center token: ${gameState.centerToken.name}`);
+
     // Continue turn - scan next token
     gameState.scannedToken = null;
     gameState.playerGuess = null;
@@ -298,6 +306,9 @@ document.getElementById('continueBtn').addEventListener('click', () => {
     const centerTokenEl = document.getElementById('scanScreenCenterToken');
     if (centerTokenEl) {
         centerTokenEl.textContent = gameState.centerToken.name;
+        console.log(`   ✅ Updated scan screen to show: ${gameState.centerToken.name}`);
+    } else {
+        console.log('   ❌ scanScreenCenterToken element not found!');
     }
 
     showScreen('scanTokenScreen');

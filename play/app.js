@@ -286,7 +286,19 @@ document.getElementById('nextPlayerBtn').addEventListener('click', () => {
 });
 
 document.getElementById('errorRetryBtn').addEventListener('click', () => {
-    showScreen('welcomeScreen');
+    const returnScreen = window.errorReturnScreen || 'welcomeScreen';
+
+    showScreen(returnScreen);
+
+    // Restart appropriate scanner based on return screen
+    if (returnScreen === 'challengeScreen') {
+        startScanner('challengeScanner', handleChallengeScanned);
+    } else if (returnScreen === 'centerTokenScreen') {
+        document.getElementById('challengeInfo').textContent = `Challenge: ${gameState.challenge.name}`;
+        startScanner('centerScanner', handleCenterScanned);
+    } else if (returnScreen === 'scanTokenScreen') {
+        startScanner('tokenScanner', handleDraftScanned);
+    }
 });
 
 document.getElementById('restartTurnBtn').addEventListener('click', () => {

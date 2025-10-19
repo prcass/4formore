@@ -4,6 +4,11 @@
 
 // Show a specific screen
 function showScreen(screenId) {
+    // Stop all scanners before switching screens
+    if (typeof stopAllScanners === 'function') {
+        stopAllScanners();
+    }
+
     // Hide all screens
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
@@ -161,8 +166,23 @@ function formatNumber(value) {
 }
 
 // Show error screen
-function showError(title, message) {
+function showError(title, message, returnScreen) {
     document.getElementById('errorTitle').textContent = title;
     document.getElementById('errorMessage').textContent = message;
+
+    // Store which screen to return to
+    if (!returnScreen) {
+        // Determine return screen based on game state
+        if (!gameState.challenge) {
+            returnScreen = 'challengeScreen';
+        } else if (!gameState.centerToken) {
+            returnScreen = 'centerTokenScreen';
+        } else {
+            returnScreen = 'scanTokenScreen';
+        }
+    }
+
+    // Store for error retry button
+    window.errorReturnScreen = returnScreen;
     showScreen('errorScreen');
 }

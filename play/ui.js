@@ -109,14 +109,16 @@ function revealResult(isCorrect) {
     if (isCorrect) {
         header.className = 'result-header correct';
         title.textContent = '✅ CORRECT!';
-        document.getElementById('continueBtn').style.display = 'block';
-        document.getElementById('nextPlayerBtn').style.display = 'none';
     } else {
         header.className = 'result-header wrong';
         title.textContent = '❌ WRONG!';
-        document.getElementById('continueBtn').style.display = 'none';
-        document.getElementById('nextPlayerBtn').style.display = 'block';
     }
+
+    // Always show "Next Player" button (renamed from Continue Challenge)
+    // Whether correct or wrong, next player takes their turn
+    // If correct: center token was updated in showResult()
+    // If wrong: center token stays the same
+    document.getElementById('continueBtn').style.display = 'block';
 
     // Animate reveal
     header.style.display = 'block';

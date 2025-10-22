@@ -328,11 +328,6 @@ function setupEventListeners() {
         }, 500);
     });
 
-    addListener('nextPlayerBtn', 'click', () => {
-        // Reset for next player
-        showScreen('welcomeScreen');
-    });
-
     addListener('errorRetryBtn', 'click', () => {
         const returnScreen = window.errorReturnScreen || 'welcomeScreen';
 

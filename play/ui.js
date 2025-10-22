@@ -94,7 +94,7 @@ function displayResult(isCorrect) {
             countdown.style.display = 'none';
             revealResult(isCorrect);
         }
-    }, 1000);
+    }, 500); // 50% faster (was 1000ms, now 500ms)
 }
 
 // Reveal the result with animation
@@ -115,9 +115,9 @@ function revealResult(isCorrect) {
         document.getElementById('nextPlayerBtn').style.display = 'block';
     }
 
-    // Animate reveal
+    // Animate reveal - 50% smaller text
     header.style.display = 'block';
-    header.style.fontSize = '3em';
+    header.style.fontSize = '1.5em';
     header.style.textAlign = 'center';
     header.style.animation = 'scaleIn 0.5s ease-out';
 

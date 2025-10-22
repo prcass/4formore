@@ -485,6 +485,51 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Breadcrumb Trail */
+.breadcrumb-trail {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.breadcrumb-trail:empty {
+    display: none;
+}
+
+.breadcrumb-item {
+    background: rgba(255,255,255,0.3);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.breadcrumb-item.correct {
+    background: rgba(39, 174, 96, 0.8);
+    box-shadow: 0 0 8px rgba(39, 174, 96, 0.5);
+}
+
+.breadcrumb-item.wrong {
+    background: rgba(231, 76, 60, 0.8);
+    box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
+}
+
+.breadcrumb-separator {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
 /* Dramatic Result Animations */
 @keyframes scaleIn {
     0% {

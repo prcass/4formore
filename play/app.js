@@ -278,6 +278,9 @@ function setupEventListeners() {
             centerTokenEl.textContent = gameState.centerToken.name;
         }
 
+        // Update breadcrumb trail (will be empty on first scan)
+        updateBreadcrumb();
+
         // Go to scanning next token
         showScreen('scanTokenScreen');
 
@@ -319,6 +322,9 @@ function setupEventListeners() {
         } else {
             console.log('   ❌ scanScreenCenterToken element not found!');
         }
+
+        // Update breadcrumb trail
+        updateBreadcrumb();
 
         showScreen('scanTokenScreen');
 

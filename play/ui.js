@@ -191,6 +191,38 @@ function formatNumber(value) {
     }
 }
 
+// Update breadcrumb trail
+function updateBreadcrumb() {
+    const breadcrumb = document.getElementById('breadcrumbTrail');
+    if (!breadcrumb) return;
+
+    // Clear existing breadcrumb
+    breadcrumb.innerHTML = '';
+
+    // If no history, hide breadcrumb
+    if (!gameState.history || gameState.history.length === 0) {
+        return;
+    }
+
+    // Add each token from history
+    gameState.history.forEach((entry, index) => {
+        // Add separator if not first item
+        if (index > 0) {
+            const separator = document.createElement('span');
+            separator.className = 'breadcrumb-separator';
+            separator.textContent = '→';
+            breadcrumb.appendChild(separator);
+        }
+
+        // Add token
+        const item = document.createElement('span');
+        item.className = `breadcrumb-item ${entry.correct ? 'correct' : 'wrong'}`;
+        item.textContent = entry.scannedToken;
+        item.title = `${entry.scannedToken} (${entry.guess} - ${entry.correct ? 'correct' : 'wrong'})`;
+        breadcrumb.appendChild(item);
+    });
+}
+
 // Show error screen
 function showError(title, message, returnScreen) {
     document.getElementById('errorTitle').textContent = title;

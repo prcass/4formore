@@ -104,6 +104,13 @@ function displayResult(isCorrect) {
 function revealResult(isCorrect) {
     const header = document.getElementById('resultHeader');
     const title = document.getElementById('resultTitle');
+    const continueBtn = document.getElementById('continueBtn');
+    const resultButtons = document.getElementById('resultButtons');
+
+    if (!header || !title) {
+        console.error('❌ Result elements not found!', { header: !!header, title: !!title });
+        return;
+    }
 
     // Set result text and style
     if (isCorrect) {
@@ -118,7 +125,9 @@ function revealResult(isCorrect) {
     // Whether correct or wrong, next player takes their turn
     // If correct: center token was updated in showResult()
     // If wrong: center token stays the same
-    document.getElementById('continueBtn').style.display = 'block';
+    if (continueBtn) {
+        continueBtn.style.display = 'block';
+    }
 
     // Animate reveal
     header.style.display = 'block';
@@ -130,7 +139,9 @@ function revealResult(isCorrect) {
 
     // Show buttons after animation
     setTimeout(() => {
-        document.getElementById('resultButtons').style.display = 'block';
+        if (resultButtons) {
+            resultButtons.style.display = 'block';
+        }
     }, 500);
 }
 

@@ -84,8 +84,16 @@
     </div>
 
     <div class="test-section">
+        <h2>Step 5: Make Guess</h2>
+        <button onclick="testGuess('higher')">Guess HIGHER</button>
+        <button onclick="testGuess('lower')">Guess LOWER</button>
+        <div id="log5" class="log"></div>
+    </div>
+
+    <div class="test-section">
         <h2>Current Game State</h2>
         <button onclick="showGameState()">Show State</button>
+        <button onclick="testFullFlow()">🚀 Run Full Test Flow</button>
         <pre id="stateDisplay" style="background: #f9f9f9; padding: 10px; border-radius: 4px;"></pre>
     </div>
 
@@ -160,6 +168,112 @@
             }
         }
 
+        function testGuess(direction) {
+            const logId = 'log5';
+            log(`Setting guess to: ${direction}`, logId);
+
+            if (!gameState.scannedToken) {
+                log('❌ No token scanned yet!', logId, 'error');
+                return;
+            }
+
+            gameState.playerGuess = direction;
+
+            // Trigger the actual guess buttons
+            if (direction === 'higher') {
+                document.getElementById('guessHigherBtn').click();
+            } else {
+                document.getElementById('guessLowerBtn').click();
+            }
+
+            log(`✅ Guess made: ${direction}`, logId, 'success');
+        }
+
+        function testFullFlow() {
+            console.log('🚀 STARTING AUTOMATED FULL FLOW TEST');
+            log('Starting automated test flow...', 'log1', 'info');
+
+            // Step 1: Start game
+            setTimeout(() => {
+                log('Step 1: Starting game...', 'log1');
+                testStartGame();
+
+                // Step 2: Scan challenge after 1s
+                setTimeout(() => {
+                    log('Step 2: Scanning Population challenge...', 'log2');
+                    testScanChallenge('COU_POPULATION');
+
+                    // Step 3: Click continue to go to center token scan
+                    setTimeout(() => {
+                        log('Step 3: Clicking continue from challenge...', 'log3');
+                        document.getElementById('continueFromChallengeBtn').click();
+
+                        // Step 4: Scan center token
+                        setTimeout(() => {
+                            log('Step 4: Scanning USA as center token...', 'log3');
+                            testScanToken('COU005', 'center'); // USA
+
+                            // Step 5: Click continue from center
+                            setTimeout(() => {
+                                log('Step 5: Clicking continue from center...', 'log4');
+                                document.getElementById('continueFromCenterBtn').click();
+
+                                // Step 6: Scan draft token
+                                setTimeout(() => {
+                                    log('Step 6: Scanning Germany as draft token...', 'log4');
+                                    testScanToken('COU001', 'draft'); // Germany
+
+                                    // Step 7: Make guess (LOWER is correct)
+                                    setTimeout(() => {
+                                        log('Step 7: Guessing LOWER...', 'log5');
+                                        testGuess('lower');
+
+                                        // Step 8: Wait for result countdown, then verify
+                                        setTimeout(() => {
+                                            console.log('🔍 VERIFYING CENTER TOKEN UPDATE...');
+
+                                            // Check gameState
+                                            console.log(`   gameState.centerToken.name = "${gameState.centerToken.name}"`);
+
+                                            // Check display element
+                                            const displayEl = document.getElementById('scanScreenCenterToken');
+                                            console.log(`   Display element exists: ${!!displayEl}`);
+                                            if (displayEl) {
+                                                console.log(`   Display element text: "${displayEl.textContent}"`);
+                                            }
+
+                                            // Verify logic
+                                            if (gameState.centerToken.name === 'Germany') {
+                                                console.log('✅ LOGIC TEST PASSED: Center token updated to Germany');
+                                                log('✅ CENTER TOKEN CORRECTLY UPDATED TO GERMANY!', 'log5', 'success');
+
+                                                // Verify display
+                                                if (displayEl && displayEl.textContent === 'Germany') {
+                                                    console.log('✅ DISPLAY TEST PASSED: Display shows Germany');
+                                                    log('✅ DISPLAY ALSO SHOWS GERMANY!', 'log5', 'success');
+                                                } else {
+                                                    console.log('❌ DISPLAY TEST FAILED');
+                                                    log(`❌ DISPLAY BUG: Element shows "${displayEl?.textContent}" instead of "Germany"`, 'log5', 'error');
+                                                }
+                                            } else {
+                                                console.log('❌ LOGIC TEST FAILED');
+                                                log(`❌ LOGIC BUG: Center token is "${gameState.centerToken.name}" instead of "Germany"`, 'log5', 'error');
+                                            }
+
+                                            // Show full game state
+                                            showGameState();
+
+                                            console.log('🏁 TEST COMPLETE');
+                                        }, 5000); // Wait for 3-2-1 countdown + reveal
+                                    }, 1000);
+                                }, 1000);
+                            }, 1000);
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }, 100);
+        }
+
         function showGameState() {
             const state = {
                 challenge: gameState.challenge ? gameState.challenge.name : 'None',
@@ -183,6 +297,14 @@
         document.addEventListener('DOMContentLoaded', async () => {
             await initApp();
             console.log('Test page ready!');
+            console.log('');
+            console.log('╔════════════════════════════════════════════════════════╗');
+            console.log('║  🧪 4forMore Flow Test Page Ready                     ║');
+            console.log('║                                                        ║');
+            console.log('║  Click "🚀 Run Full Test Flow" to run automated test  ║');
+            console.log('║  This will verify center token replacement logic      ║');
+            console.log('╚════════════════════════════════════════════════════════╝');
+            console.log('');
         });
     </script>
 </body>

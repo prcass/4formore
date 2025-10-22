@@ -238,122 +238,135 @@ function showResult() {
     }
 }
 
-// Event Listeners
-document.getElementById('startBtn').addEventListener('click', startGame);
+// Setup event listeners (called after DOM is ready)
+function setupEventListeners() {
+    // Helper to safely add event listener
+    const addListener = (id, event, handler) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener(event, handler);
+        }
+    };
 
-document.getElementById('cancelChallengeBtn').addEventListener('click', () => {
-    stopScanner('challengeScanner');
-    showScreen('welcomeScreen');
-});
+    addListener('startBtn', 'click', startGame);
 
-document.getElementById('continueFromChallengeBtn').addEventListener('click', () => {
-    showScreen('centerTokenScreen');
-    document.getElementById('challengeInfo').textContent = `Challenge: ${gameState.challenge.name}`;
-    startScanner('centerScanner', handleCenterScanned);
-});
+    addListener('cancelChallengeBtn', 'click', () => {
+        stopScanner('challengeScanner');
+        showScreen('welcomeScreen');
+    });
 
-document.getElementById('cancelCenterBtn').addEventListener('click', () => {
-    stopScanner('centerScanner');
-    showScreen('challengeSelectedScreen');
-});
-
-document.getElementById('continueFromCenterBtn').addEventListener('click', () => {
-    console.log('🔵 Continue from center clicked - going to scan token screen');
-
-    // Stop any active scanners first
-    stopAllScanners();
-
-    // Show center token on scan screen
-    const centerTokenEl = document.getElementById('scanScreenCenterToken');
-    if (centerTokenEl) {
-        centerTokenEl.textContent = gameState.centerToken.name;
-    }
-
-    // Go to scanning next token
-    showScreen('scanTokenScreen');
-
-    // Small delay to ensure screen is visible and scanners are fully stopped
-    setTimeout(() => {
-        console.log('🔵 Starting token scanner...');
-        startScanner('tokenScanner', handleDraftScanned);
-    }, 500);
-});
-
-document.getElementById('guessLowerBtn').addEventListener('click', () => {
-    gameState.playerGuess = 'lower';
-    showResult();
-});
-
-document.getElementById('guessHigherBtn').addEventListener('click', () => {
-    gameState.playerGuess = 'higher';
-    showResult();
-});
-
-document.getElementById('cancelScanBtn').addEventListener('click', () => {
-    stopScanner('tokenScanner');
-    showScreen('centerSetScreen');
-});
-
-document.getElementById('continueBtn').addEventListener('click', () => {
-    console.log('🔵 Continue button clicked');
-    console.log(`   Current center token: ${gameState.centerToken.name}`);
-
-    // Continue turn - scan next token
-    gameState.scannedToken = null;
-    gameState.playerGuess = null;
-
-    // Show updated center token
-    const centerTokenEl = document.getElementById('scanScreenCenterToken');
-    if (centerTokenEl) {
-        centerTokenEl.textContent = gameState.centerToken.name;
-        console.log(`   ✅ Updated scan screen to show: ${gameState.centerToken.name}`);
-    } else {
-        console.log('   ❌ scanScreenCenterToken element not found!');
-    }
-
-    showScreen('scanTokenScreen');
-
-    // Small delay to ensure screen is visible and scanners are fully stopped
-    setTimeout(() => {
-        startScanner('tokenScanner', handleDraftScanned);
-    }, 500);
-});
-
-document.getElementById('nextPlayerBtn').addEventListener('click', () => {
-    // Reset for next player
-    showScreen('welcomeScreen');
-});
-
-document.getElementById('errorRetryBtn').addEventListener('click', () => {
-    const returnScreen = window.errorReturnScreen || 'welcomeScreen';
-
-    showScreen(returnScreen);
-
-    // Restart appropriate scanner based on return screen
-    if (returnScreen === 'challengeScreen') {
-        startScanner('challengeScanner', handleChallengeScanned);
-    } else if (returnScreen === 'centerTokenScreen') {
+    addListener('continueFromChallengeBtn', 'click', () => {
+        showScreen('centerTokenScreen');
         document.getElementById('challengeInfo').textContent = `Challenge: ${gameState.challenge.name}`;
         startScanner('centerScanner', handleCenterScanned);
-    } else if (returnScreen === 'scanTokenScreen') {
-        startScanner('tokenScanner', handleDraftScanned);
-    }
-});
+    });
 
-document.getElementById('restartTurnBtn').addEventListener('click', () => {
-    // Restart the turn - go back to scan center token
-    gameState.scannedToken = null;
-    gameState.playerGuess = null;
-    gameState.centerToken = null;
-    showScreen('centerTokenScreen');
-    document.getElementById('challengeInfo').textContent = `Challenge: ${gameState.challenge.name}`;
-    startScanner('centerScanner', handleCenterScanned);
-});
+    addListener('cancelCenterBtn', 'click', () => {
+        stopScanner('centerScanner');
+        showScreen('challengeSelectedScreen');
+    });
 
-document.getElementById('newChallengeBtn').addEventListener('click', () => {
-    // Start completely over with new challenge
-    startGame();
-});
+    addListener('continueFromCenterBtn', 'click', () => {
+        console.log('🔵 Continue from center clicked - going to scan token screen');
+
+        // Stop any active scanners first
+        stopAllScanners();
+
+        // Show center token on scan screen
+        const centerTokenEl = document.getElementById('scanScreenCenterToken');
+        if (centerTokenEl) {
+            centerTokenEl.textContent = gameState.centerToken.name;
+        }
+
+        // Go to scanning next token
+        showScreen('scanTokenScreen');
+
+        // Small delay to ensure screen is visible and scanners are fully stopped
+        setTimeout(() => {
+            console.log('🔵 Starting token scanner...');
+            startScanner('tokenScanner', handleDraftScanned);
+        }, 500);
+    });
+
+    addListener('guessLowerBtn', 'click', () => {
+        gameState.playerGuess = 'lower';
+        showResult();
+    });
+
+    addListener('guessHigherBtn', 'click', () => {
+        gameState.playerGuess = 'higher';
+        showResult();
+    });
+
+    addListener('cancelScanBtn', 'click', () => {
+        stopScanner('tokenScanner');
+        showScreen('centerSetScreen');
+    });
+
+    addListener('continueBtn', 'click', () => {
+        console.log('🔵 Continue button clicked');
+        console.log(`   Current center token: ${gameState.centerToken.name}`);
+
+        // Continue turn - scan next token
+        gameState.scannedToken = null;
+        gameState.playerGuess = null;
+
+        // Show updated center token
+        const centerTokenEl = document.getElementById('scanScreenCenterToken');
+        if (centerTokenEl) {
+            centerTokenEl.textContent = gameState.centerToken.name;
+            console.log(`   ✅ Updated scan screen to show: ${gameState.centerToken.name}`);
+        } else {
+            console.log('   ❌ scanScreenCenterToken element not found!');
+        }
+
+        showScreen('scanTokenScreen');
+
+        // Small delay to ensure screen is visible and scanners are fully stopped
+        setTimeout(() => {
+            startScanner('tokenScanner', handleDraftScanned);
+        }, 500);
+    });
+
+    addListener('nextPlayerBtn', 'click', () => {
+        // Reset for next player
+        showScreen('welcomeScreen');
+    });
+
+    addListener('errorRetryBtn', 'click', () => {
+        const returnScreen = window.errorReturnScreen || 'welcomeScreen';
+
+        showScreen(returnScreen);
+
+        // Restart appropriate scanner based on return screen
+        if (returnScreen === 'challengeScreen') {
+            startScanner('challengeScanner', handleChallengeScanned);
+        } else if (returnScreen === 'centerTokenScreen') {
+            document.getElementById('challengeInfo').textContent = `Challenge: ${gameState.challenge.name}`;
+            startScanner('centerScanner', handleCenterScanned);
+        } else if (returnScreen === 'scanTokenScreen') {
+            startScanner('tokenScanner', handleDraftScanned);
+        }
+    });
+
+    addListener('restartTurnBtn', 'click', () => {
+        // Restart the turn - go back to scan center token
+        gameState.scannedToken = null;
+        gameState.playerGuess = null;
+        gameState.centerToken = null;
+        showScreen('centerTokenScreen');
+        document.getElementById('challengeInfo').textContent = `Challenge: ${gameState.challenge.name}`;
+        startScanner('centerScanner', handleCenterScanned);
+    });
+
+    addListener('newChallengeBtn', 'click', () => {
+        // Start completely over with new challenge
+        startGame();
+    });
+}
 
 // Initialize app on load
-document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener('DOMContentLoaded', () => {
+    setupEventListeners();
+    initApp();
+});

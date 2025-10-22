@@ -85,13 +85,16 @@ function displayResult(isCorrect) {
     let count = 3;
     countdown.textContent = count;
 
+    console.log('🔵 Starting countdown: 3...2...1 (500ms intervals)');
     const countdownInterval = setInterval(() => {
         count--;
         if (count > 0) {
             countdown.textContent = count;
+            console.log(`   ${count}...`);
         } else {
             clearInterval(countdownInterval);
             countdown.style.display = 'none';
+            console.log('   Revealing result!');
             revealResult(isCorrect);
         }
     }, 500); // 50% faster (was 1000ms, now 500ms)
@@ -115,9 +118,8 @@ function revealResult(isCorrect) {
         document.getElementById('nextPlayerBtn').style.display = 'block';
     }
 
-    // Animate reveal - 50% smaller text
+    // Animate reveal
     header.style.display = 'block';
-    header.style.fontSize = '1.5em';
     header.style.textAlign = 'center';
     header.style.animation = 'scaleIn 0.5s ease-out';
 
